@@ -3,33 +3,34 @@ html{
 }
 
 h1{
-  font-size:50px;
+  font-size:65px;
   font-family:'Times New Roman', Times, serif;
   text-align:center;
-}
-
-main{
-  width:max-content;
-  justify-content:space-between;
+  background-color:aqua;
+  height: 80px;
 }
 
 section{
-  display:flex;
+  padding-left:0px;
+  display: flex;
   justify-content:space-between;
-  padding-left:20px;
+  margin-top:25px;
+  margin-bottom: 25px;
 }
 
 img{
   width:300px;
+  height: 300px;
   margin:auto;
   padding-right:35px;
 }
 
 #show-results{
   font-size:25px;
+  margin-bottom: 15px;
 }
 
 #results-list{
   font-size:20px;
-  font-family:'Times New Roman', Times, serif
+  font-family:'Times New Roman', Times, serif;
 }
