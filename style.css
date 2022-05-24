@@ -1,0 +1,35 @@
+html{
+  background-color:hotpink;
+}
+
+h1{
+  font-size:50px;
+  font-family:'Times New Roman', Times, serif;
+  text-align:center;
+}
+
+main{
+  width:max-content;
+  justify-content:space-between;
+}
+
+section{
+  display:flex;
+  justify-content:space-between;
+  padding-left:20px;
+}
+
+img{
+  width:300px;
+  margin:auto;
+  padding-right:35px;
+}
+
+#show-results{
+  font-size:25px;
+}
+
+#results-list{
+  font-size:20px;
+  font-family:'Times New Roman', Times, serif
+}
