@@ -28,26 +28,33 @@ function Pics(name, fileExtension = 'jpg'){
   pics.push(this);
 }
 
+let getPics = localStorage.getItem('products');
+let parsedPics = JSON.parse(getPics);
+
 //pictures
-new Pics('bag');
-new Pics('banana');
-new Pics('bathroom');
-new Pics('boots');
-new Pics('breakfast');
-new Pics('bubblegum');
-new Pics('chair');
-new Pics('cthulhu');
-new Pics('dog-duck');
-new Pics('dragon');
-new Pics('pen');
-new Pics('pet-sweep');
-new Pics('scissors');
-new Pics('shark');
-new Pics('sweep', 'png');
-new Pics('tauntaun');
-new Pics('unicorn');
-new Pics('water-can');
-new Pics('wine-glass');
+if(getPics){
+  pics = parsedPics;
+}else{
+  new Pics('bag');
+  new Pics('banana');
+  new Pics('bathroom');
+  new Pics('boots');
+  new Pics('breakfast');
+  new Pics('bubblegum');
+  new Pics('chair');
+  new Pics('cthulhu');
+  new Pics('dog-duck');
+  new Pics('dragon');
+  new Pics('pen');
+  new Pics('pet-sweep');
+  new Pics('scissors');
+  new Pics('shark');
+  new Pics('sweep', 'png');
+  new Pics('tauntaun');
+  new Pics('unicorn');
+  new Pics('water-can');
+  new Pics('wine-glass');
+}
 
 
 //let counter = 0;
@@ -196,8 +203,10 @@ function handleClick(event){
   if(votes === 0){
     container.removeEventListener('click', handleClick);
   }
-
+  let stringifiedPics = JSON.stringify(pics);
+  localStorage.setItem('products', stringifiedPics);
 }
+
 
 //li element
 function handleShowResults(){
