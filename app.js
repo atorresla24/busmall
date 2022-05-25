@@ -4,6 +4,7 @@
 let votes = 25;
 //picture array
 let pics = [];
+//uniqueCount = 6;
 
 //three random images
 let container = document.getElementById('container');
@@ -14,6 +15,8 @@ let imgThree = document.getElementById('img-three');
 //results
 let showResults = document.getElementById('show-results');
 let results = document.getElementById('results-list');
+
+let ctx = document.getElementById('chart').getContext('2d');
 
 //constructor 
 function Pics(name, fileExtension = 'jpg'){
@@ -46,6 +49,10 @@ new Pics('unicorn');
 new Pics('water-can');
 new Pics('wine-glass');
 
+
+//let counter = 0;
+let checkArr = [];
+
 //randomize images
 function random(){
   return Math.floor(Math.random()*pics.length);
@@ -53,15 +60,26 @@ function random(){
 
 //render
 function render(){
-  let productOne = random();
-  let productTwo = random();
-  let productThree = random();
-
+  //let productOne = random();
+  //let productTwo = random();
+  //let productThree = random();
+  
   //imgOne != imgTwo != imgThree
-  while(productOne === productTwo || productOne === productThree || productTwo === productThree){
-    productTwo = random();
-    productThree = random();
+  //while(productOne === productTwo || productOne === productThree || productTwo === productThree){
+    //productTwo = random();
+    //productThree = random();
+  //}
+
+  while(checkArr.length < 6){
+    let num = random();
+    if(!checkArr.includes(num)){
+      checkArr.push(num);
+    }
   }
+
+  let productOne = checkArr.shift();
+  let productTwo = checkArr.shift();
+  let productThree = checkArr.shift();
 
   imgOne.src = pics[productOne].img;
   imgOne.alt = pics[productOne].name;
@@ -74,9 +92,92 @@ function render(){
   imgThree.src = pics[productThree].img;
   imgThree.alt = pics[productThree].name;
   pics[productThree].views++;
+
 }
 
 render();
+
+// Chart render
+function chartRender(){
+  let picsNames = [];
+  let picsVotes = [];
+  let picsViews = [];
+
+  for (let i = 0; i < pics.length; i++){
+    picsNames.push(pics[i].name);
+    picsVotes.push(pics[i].count);
+    picsViews.push(pics[i].views);
+  }
+
+  let myChartObj = {
+    type: 'bar',
+    data: {
+      labels: picsNames,
+      datasets: [{
+        label: '# of Votes',
+        data: picsVotes,
+        backgroundColor: [
+          '#ff7300',
+          '#fffb00',
+          '#48ff00',
+          '#00ffd5',
+          '#002bff',
+          '#7a00ff',
+          '#ff00c8',
+          '#ff0000'
+        ],
+        borderColor: [
+          '#ff7300',
+          '#fffb00',
+          '#48ff00',
+          '#00ffd5',
+          '#002bff',
+          '#7a00ff',
+          '#ff00c8',
+          '#ff0000'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: picsViews,
+        backgroundColor: [
+          '#ff0000',
+          '#ff7300',
+          '#fffb00',
+          '#48ff00',
+          '#00ffd5',
+          '#002bff',
+          '#7a00ff',
+          '#ff00c8',
+          '#ff0000'
+        ],
+        borderColor: [
+          '#ff0000',
+          '#ff7300',
+          '#fffb00',
+          '#48ff00',
+          '#00ffd5',
+          '#002bff',
+          '#7a00ff',
+          '#ff00c8',
+          '#ff0000'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  new Chart(ctx, myChartObj);
+
+}
 
 //event handler
 function handleClick(event){
@@ -101,16 +202,15 @@ function handleClick(event){
 //li element
 function handleShowResults(){
   if(votes === 0){
-    for(let i = 0; i < pics.length; i++){
-      let liElem = document.createElement('li');
-      liElem.textContent = `${pics[i].name} was viewed ${pics[i].views} times and voted ${pics[i].count} times.`
-      results.appendChild(liElem);
-    }  
+    chartRender();
+    showResults.removeEventListener('click', handleShowResults);  
   }
 }
 
 container.addEventListener('click', handleClick);
 showResults.addEventListener('click', handleShowResults);
+
+
 
 
 
